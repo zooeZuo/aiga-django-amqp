@@ -1,4 +1,6 @@
 include LICENSE
 include README.rst
-
 recursive-include docs *
+
+exclude .gitignore
+recursive-exclude .git *
