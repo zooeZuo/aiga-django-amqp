@@ -42,19 +42,14 @@ class AMQPConnector(pika.BlockingConnection):
 class AMQPListener:
     ExchangeType = ExchangeType
 
-    def __init__(self):
-        self.connection = self.__connect()
-
-    def __connect(self):
+    def connect(self):
         return AMQPConnector()
-
-    def __disconnect(self):
-        self.connection.close()
 
     def consume(self, consumer, channel_name = None):
         def runner():
+            connection = self.connect()
             ch_name = channel_name
-            channel = self.connection.channel()
+            channel = connection.channel()
             channel.queue_declare(queue=ch_name)
             channel.basic_qos(prefetch_count=1)
 
@@ -72,8 +67,9 @@ class AMQPListener:
 
     def subscribe(self, consumer, exchange_key = None, routing_key = '', exchange_type = ExchangeType.fanout):
         def runner():
+            connection = self.connect()
             ch_name = exchange_key
-            channel = self.connection.channel()
+            channel = connection.channel()
 
             exchange_declaration_params = {
                 'exchange' : ch_name,
@@ -104,12 +100,6 @@ class AMQPListener:
         thread.daemon = True
         thread.start()
         return thread
-
-    def __enter__(self):
-        print(self.connection)
-
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        self.__disconnect()
 
 # function untuk mengirim queue ke rabbit mq
 def send_queue(channel : str, message : str):
