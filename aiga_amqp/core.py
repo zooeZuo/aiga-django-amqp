@@ -11,6 +11,7 @@ SETTINGS = {
     'CREDENTIAL' : False,
     'USERNAME' : None,
     'PASSWORD' : None,
+    'VIRTUAL_HOST' : '/'
     'HEARTBEAT' : 600,
     'TIMEOUT' : 300
 }
@@ -25,6 +26,7 @@ class AMQPConnector(pika.BlockingConnection):
         params = {
             'host' : SETTINGS['HOST'], 
             'port' : int(SETTINGS['PORT']),
+            'virtual_host' : SETTINGS['VIRTUAL_HOST'],
             'heartbeat' : int(SETTINGS['HEARTBEAT']),
             'blocked_connection_timeout' : int(SETTINGS['TIMEOUT'])            
         }
