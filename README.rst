@@ -69,6 +69,7 @@ Terdapat beberapa variable yang bisa digunakan pada ``settings.py`` beserta defa
         'CREDENTIAL' : False,   //set menjadi True jika menggunakan USERNAME dan PASSWORD
         'USERNAME' : None,      //username untuk mengakses rabbitmq
         'PASSWORD' : None,      //password untuk mengakses rabbitmq
+        'VIRTUAL_HOST' : '/'
         'HEARTBEAT' : 600,
         'TIMEOUT' : 300
     }
